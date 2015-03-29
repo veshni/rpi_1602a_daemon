@@ -1,2 +1,3 @@
 # rpi_1602a_daemon
-rpi display
+Simple daemon that should interface the 1602A display on
+a raspberry pi. Communication is done over dbus.
