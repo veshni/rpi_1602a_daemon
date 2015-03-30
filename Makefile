@@ -9,11 +9,13 @@ OBJ = rpi_1602_gpio.o rpi_1602.o
 DEPS = rpi_1602_gpio.h
 
 #Any special libraries you are using in your project (e.g. -lbcm2835 -lrt `pkg-config --libs gtk+-3.0` ), or leave blank
-LIBS = -lrt $(shell pkg-config --libs glib-2.0)
+LIBS = -lrt -lpigpio
+LIBS += $(shell pkg-config --libs glib-2.0)
 LIBS += $(shell pkg-config --libs gio-2.0)
 
 #Set any compiler flags you want to use (e.g. -I/usr/include/somefolder `pkg-config --cflags gtk+-3.0` ), or leave blank
-CFLAGS = -lrt -Wall $(shell pkg-config --cflags glib-2.0)
+CFLAGS = -lrt -Wall 
+CFLAGS += $(shell pkg-config --cflags glib-2.0)
 CFLAGS += $(shell pkg-config --cflags gio-2.0)
 
 #Set the compiler you are using ( gcc for C or g++ for C++ )

@@ -1,5 +1,6 @@
 #include "rpi_1602_gpio.h"
 #include <glib.h>
+#include <pigpio.h>
 
 #define PIN_RS 		25
 #define PIN_E 		24
@@ -173,12 +174,23 @@ static void write_message(char* text)
 }
 
 static void set_gpio(guint pin, gboolean value) {
-
+	gpioWrite(pin, value ? 1 : 0);
 }
 
-void rpi_1602_gpio_init()
+int rpi_1602_gpio_init()
 {
-   
+    if (gpioInitialise() < 0) {
+        log_err("pigpio initialisation failed");
+        return -1;
+    }
+
+    gpioSetMode(PIN_E, PI_OUTPUT);
+    gpioSetMode(PIN_RS, PI_OUTPUT);
+    gpioSetMode(PIN_DB_0, PI_OUTPUT);
+    gpioSetMode(PIN_DB_1, PI_OUTPUT);
+    gpioSetMode(PIN_DB_2, PI_OUTPUT);
+    gpioSetMode(PIN_DB_3, PI_OUTPUT);
+
     write_4_bits(0x33, FALSE);
     write_4_bits(0x32, FALSE);
     write_4_bits(0x28, FALSE);
@@ -190,6 +202,7 @@ void rpi_1602_gpio_init()
     displaymode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
     write_4_bits(LCD_ENTRYMODESET | displaymode, FALSE);
     clear();
+    return 0;
 }
 
 void rpi_1602_gpio_update(char *message) {
