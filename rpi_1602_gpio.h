@@ -49,4 +49,20 @@
 
 void rpi_1602_gpio_update(char *message);
 void rpi_1602_gpio_init();
+void begin(gint lines);
+void home();
+void clear();
+void set_cursor(guint col, guint row);
+void no_display();
+void display();
+void no_cursor();
+void cursor();
+void no_blink();
+void blink();
+void display_left();
+void scroll_display_right();
+void left_to_right();
+void right_to_left();
+void autoscroll();
+void no_autoscroll();
 #endif
